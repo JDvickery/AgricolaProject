@@ -1,12 +1,40 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import React, {Component} from 'react';
+import { Platform, StatusBar, StyleSheet, View, AppState} from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import Database from './components/Database';
 
-export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+interface State{
+  isLoadingComplete: boolean,
+  appState: string,
+  dataBaseIsReady: boolean,
+}
+
+const database = new Database;
+
+export default class App extends Component<{}, State> {
+
+  constructor(props: any){
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      appState: AppState.currentState,
+      databaseIsReady: false,
+    };
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
+  }
+
+  componentDidMount(){
+    this.appIsNowRunningInForeground();
+    this.setState({
+      appState: "active"
+    });
+    AppState.addEventListener('change',this.handleAppStateChange);
+  }
+
+  componentWillUnmount(){
+    AppState.removeEventListener('change',this,this.handleAppStateChange);
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -18,6 +46,7 @@ export default class App extends React.Component {
         />
       );
     } else {
+      console.log(database);
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
@@ -27,6 +56,24 @@ export default class App extends React.Component {
     }
   }
 
+  handleAppStateChange(nextAppState: string){
+    if( this.state.appState.match(/inactive|background/) && nextAppState === 'active' ){
+      this.appIsNowRunningInForeground();
+    }else if( this.state.appState === 'active' && nextAppState.match(/inactive|background/) ){
+      this.appHasGoneToBackground();
+    }
+    this.setState({appState: nextAppState});
+  }
+
+  appIsNowRunningInForeground(){
+    database.open();
+    this.setState({dataBaseIsReady: true});
+  }
+
+  appHasGoneToBackground(){
+    database.close();
+  }
+
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
@@ -34,18 +81,13 @@ export default class App extends React.Component {
         require('./assets/images/robot-prod.png'),
       ]),
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
   };
 
   _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
     console.warn(error);
   };
 
