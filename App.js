@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import { Platform, StatusBar, StyleSheet, View, AppState} from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { AppLoading, Asset, Font, Icon, SQLite } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
-import Database from './components/Database';
 
 interface State{
   isLoadingComplete: boolean,
-  appState: string,
-  dataBaseIsReady: boolean,
 }
 
-const database = new Database;
+const db = SQLite.openDatabase('Agricola.db', );
 
 export default class App extends Component<{}, State> {
 
@@ -18,22 +15,11 @@ export default class App extends Component<{}, State> {
     super(props);
     this.state = {
       isLoadingComplete: false,
-      appState: AppState.currentState,
-      databaseIsReady: false,
     };
-    this.handleAppStateChange = this.handleAppStateChange.bind(this);
   }
 
   componentDidMount(){
-    this.appIsNowRunningInForeground();
-    this.setState({
-      appState: "active"
-    });
-    AppState.addEventListener('change',this.handleAppStateChange);
-  }
-
-  componentWillUnmount(){
-    AppState.removeEventListener('change',this,this.handleAppStateChange);
+    this.createTables();
   }
 
   render() {
@@ -46,7 +32,6 @@ export default class App extends Component<{}, State> {
         />
       );
     } else {
-      console.log(database);
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
@@ -54,24 +39,6 @@ export default class App extends Component<{}, State> {
         </View>
       );
     }
-  }
-
-  handleAppStateChange(nextAppState: string){
-    if( this.state.appState.match(/inactive|background/) && nextAppState === 'active' ){
-      this.appIsNowRunningInForeground();
-    }else if( this.state.appState === 'active' && nextAppState.match(/inactive|background/) ){
-      this.appHasGoneToBackground();
-    }
-    this.setState({appState: nextAppState});
-  }
-
-  appIsNowRunningInForeground(){
-    database.open();
-    this.setState({dataBaseIsReady: true});
-  }
-
-  appHasGoneToBackground(){
-    database.close();
   }
 
   _loadResourcesAsync = async () => {
@@ -94,6 +61,46 @@ export default class App extends Component<{}, State> {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
+
+  /*
+  CURDS
+   */
+
+  createTables(){
+    db.transaction( tx =>
+        tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS Games( " +
+            "gameID INTEGER PRIMARY KEY NOT NULL, " +
+            "Date TEXT, " +
+            "Location TEXT" +
+            ");"
+        )
+    );
+
+    db.transaction( tx =>
+        tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS Players( " +
+            "playerID INTEGER PRIMARY KEY NOT NULL, " +
+            "FirstName TEXT, " +
+            "LastName TEXT, " +
+            "Gravitar BIT DEFAULT 0" +
+            ");"
+        )
+    );
+
+    db.transaction( tx =>
+        tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS Scores( " +
+            "scoreID INTEGER PRIMARY KEY NOT NULL, " +
+            "gameID INTEGER, " +
+            "playerID INTEGER, " +
+            "score INTEGER, " +
+            "FOREIGN KEY ( gameID ) REFERENCES Games ( gameID ), " +
+            "FOREIGN KEY ( playerID ) REFERENCES Players ( playerID )" +
+            ");"
+        )
+    );
+  }
 }
 
 const styles = StyleSheet.create({
