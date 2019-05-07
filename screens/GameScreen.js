@@ -1,10 +1,17 @@
-import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
-import AgButton from "../components/AgButton";
-import AgPicker from "../components/AgPicker";
+import React, {Component} from 'react';
+import {ScrollView, StyleSheet, View, AppState} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import MultiSelect from 'react-native-multiple-select';
 
-export default class GameScreen extends React.Component {
+export default class GameScreen extends Component {
+
+  constructor(){
+    super();
+    this.state = {
+      selectedItems: []
+    }
+  }
+
   static navigationOptions = {
     title: 'Game',
   };
@@ -13,7 +20,6 @@ export default class GameScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.wrapper}>
-          <AgPicker defaultValue={"Select or add user"} customChange={()=>alert("Add new user here...")}/>
         </View>
       </ScrollView>
     );
