@@ -17,26 +17,25 @@ export default class GameScreen extends Component {
 
   render() {
       let rows = Database.getPlayers();
+      var availablePlayers;
       if( typeof rows !== 'undefined'){
-          for(let c; c < rows.length; c++){
-              console.log(rows[c]);
-          }
+          availablePlayers = rows.map( (player) => {
+              <Picker.Item label={player[1] + ' ' + player[2]} value={player[0]}/>
+          });
       }else{
-          rows = 'Add a New Player';
+          availablePlayers = <Picker.Item label={"Add a New Player"} value={"Add a New Player"}/>;
       }
-      let availablePlayers = rows.map( (p, i) => {
-
-      });
     return (
       <ScrollView style={styles.container}>
           <View style={styles.wrapper}>
               <Picker
                   selectedValue={this.state.selectedPlayers}
-                  style={{ height: 50, width: 100 }}
-                  onValueChange={(itemValue, itemIndex) => this.setState({selectedPlayers: itemValue})}>
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => this.setState({selectedPlayers: [...this.state.selectedPlayers, itemValue]})}>
+                  {availablePlayers}
               </Picker>
+          </View>
+          <View style={styles.wrapper}>
               <TouchableOpacity style={styles.addPlayerButton} onPress={this.addNewPlayer()}>
                   <Text style={styles.addPlayerButtonText}>+</Text>
               </TouchableOpacity>
@@ -46,23 +45,30 @@ export default class GameScreen extends Component {
   }
 
   addNewPlayer(){
-    alert("add things here...");
+
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+      flexDirection: 'row',
     paddingTop: 15,
-    backgroundColor: '#fff',
+      alignSelf: 'stretch',
   },
   wrapper: {
-    alignItems: 'center',
-    marginHorizontal: 50,
+      flex: 1,
+      alignSelf: 'stretch',
   },
-    addPlayerButton: {
-        width: 80,
+    picker: {
+        flex: 1,
         height: 80,
+        justifyContent: 'center',
+        alignSelf: 'stretch',
+    },
+    addPlayerButton: {
+        flex: 1,
+        justifyContent: 'center',
+        alignSelf: 'stretch',
     },
     addPlayerButtonText: {
         fontSize: 75
