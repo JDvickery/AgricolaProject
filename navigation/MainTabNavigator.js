@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import GameScreen from '../screens/GameScreen';
 import RecordsScreen from '../screens/RecordsScreen';
+import AddPlayerScreen from '../screens/AddPlayerScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -49,8 +50,13 @@ RecordsStack.navigationOptions = {
   ),
 };
 
+const AddPlayerStack = createStackNavigator({
+  AddPlayer: AddPlayerScreen,
+});
+
 export default createBottomTabNavigator({
   HomeStack,
   GameStack,
   RecordsStack,
+  AddPlayerStack,
 });

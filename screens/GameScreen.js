@@ -36,16 +36,12 @@ export default class GameScreen extends Component {
               </Picker>
           </View>
           <View style={styles.wrapper}>
-              <TouchableOpacity style={styles.addPlayerButton} onPress={this.addNewPlayer()}>
+              <TouchableOpacity style={styles.addPlayerButton} onPress={() => this.props.navigation.navigate('AddPlayer')}>
                   <Text style={styles.addPlayerButtonText}>+</Text>
               </TouchableOpacity>
           </View>
       </ScrollView>
     );
-  }
-
-  addNewPlayer(){
-
   }
 }
 
