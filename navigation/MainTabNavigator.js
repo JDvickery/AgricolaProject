@@ -50,13 +50,8 @@ RecordsStack.navigationOptions = {
   ),
 };
 
-const AddPlayerStack = createStackNavigator({
-  AddPlayer: AddPlayerScreen,
-});
-
 export default createBottomTabNavigator({
   HomeStack,
   GameStack,
   RecordsStack,
-  AddPlayerStack,
 });

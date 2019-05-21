@@ -26,7 +26,7 @@ export default class GameScreen extends Component {
           availablePlayers = <Picker.Item label={"Add a New Player"} value={"Add a New Player"}/>;
       }
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.wrapper}>
               <Picker
                   selectedValue={this.state.selectedPlayers}
@@ -36,7 +36,7 @@ export default class GameScreen extends Component {
               </Picker>
           </View>
           <View style={styles.wrapper}>
-              <TouchableOpacity style={styles.addPlayerButton} onPress={() => this.props.navigation.navigate('AddPlayer')}>
+              <TouchableOpacity style={styles.addPlayerButton} onPress={() => this.props.navigation.navigate('AddPlayerScreen')}>
                   <Text style={styles.addPlayerButtonText}>+</Text>
               </TouchableOpacity>
           </View>
@@ -47,24 +47,21 @@ export default class GameScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+      flex: 1,
       flexDirection: 'row',
-    paddingTop: 15,
+        paddingTop: 15,
       alignSelf: 'stretch',
+      alignItems: 'flex-start'
   },
   wrapper: {
-      flex: 1,
-      alignSelf: 'stretch',
+
   },
     picker: {
-        flex: 1,
         height: 80,
-        justifyContent: 'center',
-        alignSelf: 'stretch',
+        width: 300,
     },
     addPlayerButton: {
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf: 'stretch',
+        width: 75,
     },
     addPlayerButtonText: {
         fontSize: 75
