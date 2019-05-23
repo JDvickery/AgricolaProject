@@ -45,6 +45,9 @@ export default class App extends Component<{}, State> {
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
         require('./assets/images/robot-prod.png'),
+        require('./assets/images/header-image.jpg'),
+        require('./assets/images/back-icon.png'),
+        require('./assets/images/home-screen.jpg'),
       ]),
       Font.loadAsync({
         ...Icon.Ionicons.font,

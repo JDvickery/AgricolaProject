@@ -24,6 +24,7 @@ HomeStack.navigationOptions = {
 
 const GameStack = createStackNavigator({
   Game: GameScreen,
+  AddPlayer: AddPlayerScreen
 });
 
 GameStack.navigationOptions = {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity, Text, Picker} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View, TouchableOpacity, Text, CheckBox} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Database from '../Database';
 
 export default class GameScreen extends Component {
@@ -11,8 +12,21 @@ export default class GameScreen extends Component {
     };
   }
 
-  static navigationOptions = {
-    title: 'Game',
+  static navigationOptions = ({navigation}) => {
+      return {
+          title: 'Game',
+          headerRight: (
+              <TouchableOpacity style={styles.addPlayerButton} onPress={() => navigation.navigate('AddPlayer')}>
+                  <Icon
+                      reverse
+                      name={Platform.OS === "ios" ? "ios-person-add" : "md-person-add"}
+                      color={"#c9884c"}
+                      type={"ionicon"}
+                      size={35}
+                  />
+              </TouchableOpacity>
+          )
+      }
   };
 
   render() {
@@ -20,25 +34,22 @@ export default class GameScreen extends Component {
       var availablePlayers;
       if( typeof rows !== 'undefined'){
           availablePlayers = rows.map( (player) => {
-              <Picker.Item label={player[1] + ' ' + player[2]} value={player[0]}/>
+              <CheckBox
+                  title={player[1] + ' ' + player[2]}
+                  iconType='material'
+                  checkedIcon='clear'
+                  uncheckedIcon='add'
+                  checkedColor='red'
+                  checked={this.state.checked}
+              />
           });
       }else{
-          availablePlayers = <Picker.Item label={"Add a New Player"} value={"Add a New Player"}/>;
+          availablePlayers = <Text style={styles.playerAlertText}>There are no players, you must add at least one player.</Text>;
       }
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.wrapper}>
-              <Picker
-                  selectedValue={this.state.selectedPlayers}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => this.setState({selectedPlayers: [...this.state.selectedPlayers, itemValue]})}>
-                  {availablePlayers}
-              </Picker>
-          </View>
-          <View style={styles.wrapper}>
-              <TouchableOpacity style={styles.addPlayerButton} onPress={() => this.props.navigation.navigate('AddPlayerScreen')}>
-                  <Text style={styles.addPlayerButtonText}>+</Text>
-              </TouchableOpacity>
+      <ScrollView>
+          <View contentContainerStyle={styles.container}>
+              {availablePlayers}
           </View>
       </ScrollView>
     );
@@ -46,24 +57,20 @@ export default class GameScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    addPlayerButton: {
+      marginRight: 15,
+      width: 35,
+      height: 35,
+    },
   container: {
       flex: 1,
       flexDirection: 'row',
-        paddingTop: 15,
-      alignSelf: 'stretch',
-      alignItems: 'flex-start'
+      justifyContent: 'center',
+      alignItems: 'stretch',
   },
-  wrapper: {
-
-  },
-    picker: {
-        height: 80,
-        width: 300,
+    playerAlertText: {
+      textAlign: 'center',
+        marginTop: 15,
+        color: '#8B6C12'
     },
-    addPlayerButton: {
-        width: 75,
-    },
-    addPlayerButtonText: {
-        fontSize: 75
-    }
 });
