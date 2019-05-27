@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import GameScreen from '../screens/GameScreen';
 import RecordsScreen from '../screens/RecordsScreen';
 import AddPlayerScreen from '../screens/AddPlayerScreen';
+import ScoreScreen from '../screens/ScoreScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -24,7 +25,8 @@ HomeStack.navigationOptions = {
 
 const GameStack = createStackNavigator({
   Game: GameScreen,
-  AddPlayer: AddPlayerScreen
+  AddPlayer: AddPlayerScreen,
+  Score: ScoreScreen
 });
 
 GameStack.navigationOptions = {

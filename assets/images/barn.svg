@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 288 288" style="enable-background:new 0 0 288 288;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#3FB24F;}
+	.st1{fill:#139048;}
+	.st2{fill:#AB5A1D;}
+	.st3{fill:#783F16;}
+	.st4{fill:#F40238;}
+	.st5{fill:#BF0032;}
+	.st6{fill:#CFA388;}
+	.st7{fill:#BF947A;}
+	.st8{clip-path:url(#SVGID_2_);fill:#FFFFFF;}
+	.st9{opacity:0.1;}
+</style>
+<path class="st0" d="M288,144c0,79.5-64.5,144-144,144S0,223.5,0,144S64.5,0,144,0S288,64.5,288,144z"/>
+<path class="st1" d="M288,144c0-3.2-0.1-6.3-0.3-9.4l-39.4-39.4L51.7,212.5l74.4,74.4c5.9,0.7,11.9,1.1,18,1.1
+	C223.5,288,288,223.5,288,144z"/>
+<path class="st2" d="M197.6,57L144,39L90.4,57L51.7,95.3v117.3h184.7V95.3L197.6,57z"/>
+<path class="st3" d="M236.3,95.3L197.6,57L144,39v173.5h92.3V95.3z"/>
+<path class="st4" d="M236.4,107.2l-43.3-42.8L144,47.9L94.9,64.4l-43.3,42.8l-11.9-12l46.1-45.6L144,30.1l58.2,19.5l46.1,45.6
+	L236.4,107.2z"/>
+<path class="st5" d="M202.2,49.6L144,30.1v17.8l49.1,16.5l43.3,42.8l11.9-12L202.2,49.6z"/>
+<path class="st6" d="M87,105.4H201v107.1H87V105.4z"/>
+<path class="st7" d="M144,105.4h57v107.1h-57V105.4z"/>
+<g>
+	<defs>
+		<rect id="SVGID_1_" x="87" y="105.4" width="113.9" height="107.1"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	
+		<rect x="56.1" y="152.6" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -70.2189 148.3791)" class="st8" width="175.8" height="12.7"/>
+	
+		<rect x="56.1" y="152.6" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 133.4278 373.1702)" class="st8" width="175.8" height="12.7"/>
+	
+		<rect x="113.1" y="150.2" transform="matrix(6.123234e-17 -1 1 6.123234e-17 44.4271 357.4748)" class="st8" width="175.8" height="12.7"/>
+	
+		<rect x="-0.8" y="145.4" transform="matrix(6.123234e-17 -1 1 6.123234e-17 -64.7101 238.8082)" class="st8" width="175.8" height="12.7"/>
+	
+		<rect x="56.1" y="99" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 288 210.7529)" class="st8" width="175.8" height="12.7"/>
+</g>
+<path class="st9" d="M144,105.4h57v107.1h-57V105.4z"/>
+</svg>
