@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity, Text, TextInput, Image} from 'react-native';
 import Database from '../Database';
+import {Header} from "react-navigation";
+
+const headerBackground = (
+    <Image
+        style={{overflow:'hidden',resizeMode:'center',height:Header.HEIGHT,position:'absolute'}}
+        blurRadius={10}
+        source={require('../assets/images/header-image.jpg')}
+    />
+);
 
 export default class AddPlayerScreen extends Component {
 
@@ -15,11 +24,12 @@ export default class AddPlayerScreen extends Component {
 
     static navigationOptions = {
         title: 'Add Player',
-        headerBackTitleStyle: {color:'#c9884c'},
+        headerTitleStyle: {color:'#000000'},
+        headerBackTitleStyle: {color:'#000000'},
         headerBackImage: (
             <Image
-                source={require('../assets/images/back-icon.svg')}
-                style={{marginLeft: 10,marginRight:5,height: 21,width: 12,}}
+                source={require('../assets/images/back-icon-black.png')}
+                style={{marginLeft: 10,marginRight:5,height: 21,width: 12}}
             />
         ),
     };

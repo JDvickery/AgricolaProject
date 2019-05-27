@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import {Platform, ScrollView, StyleSheet, View, TouchableOpacity, Text, CheckBox} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View, TouchableOpacity, Text, CheckBox, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Database from '../Database';
+import { Header } from 'react-navigation';
+
+const headerBackground = (
+    <Image
+        style={{overflow:'hidden',resizeMode:'center',height:Header.HEIGHT,position:'absolute'}}
+        blurRadius={10}
+        source={require('../assets/images/header-image.jpg')}
+    />
+);
 
 export default class GameScreen extends Component {
 
@@ -14,6 +23,7 @@ export default class GameScreen extends Component {
 
   static navigationOptions = ({navigation}) => {
       return {
+          headerTitleStyle: {color:'#000000'},
           title: 'Game',
           headerRight: (
               <TouchableOpacity style={styles.addPlayerButton} onPress={() => navigation.navigate('AddPlayer')}>
@@ -23,6 +33,7 @@ export default class GameScreen extends Component {
                       color={"#c9884c"}
                       type={"ionicon"}
                       size={35}
+                      style={{color:'#000000'}}
                   />
               </TouchableOpacity>
           )
@@ -47,7 +58,7 @@ export default class GameScreen extends Component {
           availablePlayers = <Text style={styles.playerAlertText}>There are no players, you must add at least one player.</Text>;
       }
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor:'white'}}>
           <View contentContainerStyle={styles.container}>
               {availablePlayers}
           </View>
@@ -63,6 +74,7 @@ const styles = StyleSheet.create({
       height: 35,
     },
   container: {
+        backgroundColor: '#ffffff',
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'center',
