@@ -39,7 +39,7 @@ export default class AddPlayerScreen extends Component {
     };
 
     render() {
-        let rows = Database.getPlayers();
+        let txResults = Database.getPlayers();
         return (
             <ScrollView>
                 <Text style={styles.infoText}>Enter player's first and last name and gravitar choice. Click "Add Player" when ready.</Text>
@@ -66,7 +66,7 @@ export default class AddPlayerScreen extends Component {
                     >
                         <Image
                             source={require('../assets/images/family_m.png')}
-                            style={styles.gravatarImage}
+                            style={[styles.gravatarImage,this.isSelected(0)]}
                             resizeMode={'center'}
                         />
                     </TouchableOpacity>
@@ -76,18 +76,34 @@ export default class AddPlayerScreen extends Component {
                     >
                         <Image
                             source={require('../assets/images/family_f.png')}
-                            style={styles.gravatarImage}
+                            style={[styles.gravatarImage,this.isSelected(1)]}
                             resizeMode={'center'}
                         />
                     </TouchableOpacity>
                 </View>
                 <View contentContainerStyle={styles.container} style={styles.container}>
                     <AgButton title={"Add Player"} customClick={() => {
-                        console.log("adding player");
+                        if(this.state.firstName === '' || this.state.lastName === ''){
+                            alert("Enter First and Last name.");
+                        }else{
+                            Database.addPlayer(this.state.firstName,this.state.lastName,this.state.gravatar);
+                        }
                     }}/>
                 </View>
             </ScrollView>
         );
+    }
+
+    isSelected = function (options) {
+        if(options===this.state.gravatar){
+            return{
+                opacity: 1
+            }
+        }else{
+            return{
+                opacity: 0.5
+            }
+        }
     }
 }
 
@@ -113,6 +129,7 @@ const styles = StyleSheet.create({
         padding: 3,
     },
     gravatarSelect: {
+        padding: 15,
         marginTop: 15,
         marginBottom: 15,
         flex: 0.45,
@@ -120,7 +137,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     gravatarImage: {
-        width: windowWidth * 0.45,
-        height: windowWidth * 0.45,
+        width: windowWidth * 0.35,
+        height: windowWidth * 0.35,
     }
 });

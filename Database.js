@@ -6,7 +6,7 @@ var databaseName = 'Agricola.db';
 var databaseVersion = '1.0';
 var databaseDisplayName = 'db';
 
-let db = SQLite.openDatabase( databaseName, databaseVersion, databaseDisplayName );
+const db = SQLite.openDatabase( databaseName, databaseVersion, databaseDisplayName );
 
 class Database {
     getDatabase(){
@@ -24,9 +24,13 @@ class Database {
                     "gameID INTEGER PRIMARY KEY NOT NULL, " +
                     "Date TEXT, " +
                     "Location TEXT" +
-                    ");"
+                    ");",
+                    [],
+                    () => {console.log("Queuing the creation of the Games table...");}
                 );
-            }
+            },
+            null,
+            () => {console.log("Games Table Creates");}
         );
 
         db.transaction( tx => {
@@ -35,10 +39,14 @@ class Database {
                     "playerID INTEGER PRIMARY KEY NOT NULL, " +
                     "FirstName TEXT, " +
                     "LastName TEXT, " +
-                    "Gravitar BIT DEFAULT 0" +
-                    ");"
+                    "Gravitar BIT" +
+                    ");",
+                    [],
+                    () => {console.log("Queuing the creation of the Players table...");}
                 );
-            }
+            },
+            null,
+            () => {console.log("Players Table Creates");}
         );
 
         db.transaction( tx => {
@@ -50,46 +58,42 @@ class Database {
                     "score INTEGER, " +
                     "FOREIGN KEY ( gameID ) REFERENCES Games ( gameID ), " +
                     "FOREIGN KEY ( playerID ) REFERENCES Players ( playerID )" +
-                    ");"
+                    ");",
+                    [],
+                    () => {console.log("Queuing the creation of the Scores table...");}
                 );
-            }
+            },
+            null,
+            () => {console.log("Scores Table Creates");}
         );
     }
 
     addPlayer(_firstName:string, _lastName:string, _gravitar:number){
-        var rows;
+        var txResults;
         db.transaction( tx=> {
                 tx.executeSql(
-                    "SELECT * FROM Players " +
-                    "WHERE FirstName = ? " +
-                    "AND LastName = ?;",
-                    [ _firstName, _lastName ],
-                    (_, {_rows}) => { rows = _rows; }
+                    "INSERT INTO Players (FirstName, LastName, Gravitar) " +
+                    "VALUES (?, ?, ?)",
+                    [ _firstName, _lastName, _gravitar ],
+                    ( tx, results ) => { console.log("Queuing the insertion of new player..."); }
                 );
             },
             null,
-            tx => {
-                if ( typeof rows === 'undefined' ) {
-                    tx.executeSql(
-                        "INSERT INTO Players (FirstName, LastName, Gravitar) " +
-                        "VALUES (?, ?, ?)",
-                        [_firstName, _lastName, _gravitar]
-                    )
-                }
-            }
+            () => { console.log("Added Player"); }
         )
     }
 
     getPlayers(){
-        var rows;
+        var txResults;
         db.transaction( tx=> {
                 tx.executeSql(
                     "SELECT * FROM Players",
-                    (_, {_rows}) => { rows = _rows; }
+                    [],
+                    ( tx, results ) => { txResults = results; console.log("Queuing the selecting of all player data..."); }
                 );
             },
             null,
-            () => { return rows; }
+            () => { console.log("Retrieved player data"); return txResults; }
         );
     }
 }

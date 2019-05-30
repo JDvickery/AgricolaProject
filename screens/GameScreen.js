@@ -41,10 +41,10 @@ export default class GameScreen extends Component {
   };
 
   render() {
-      let rows = Database.getPlayers();
+      let txResults = Database.getPlayers();
       var availablePlayers;
-      if( typeof rows !== 'undefined'){
-          availablePlayers = rows.map( (player) => {
+      if( typeof txResults.rows !== 'undefined'){
+          availablePlayers = txResults.rows.map( (player) => {
               <CheckBox
                   title={player[1] + ' ' + player[2]}
                   iconType='material'
