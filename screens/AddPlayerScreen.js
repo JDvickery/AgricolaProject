@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity, Text, TextInput, Image} from 'react-native';
+import {ScrollView, StyleSheet, View, TouchableOpacity, Text, TextInput, Image, Dimensions} from 'react-native';
+import AgButton from '../components/AgButton';
 import Database from '../Database';
 import {Header} from "react-navigation";
 
@@ -10,6 +11,9 @@ const headerBackground = (
         source={require('../assets/images/header-image.jpg')}
     />
 );
+
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
 export default class AddPlayerScreen extends Component {
 
@@ -60,14 +64,27 @@ export default class AddPlayerScreen extends Component {
                         style={styles.gravatarSelect}
                         onPress={() => this.setState({gravatar:0})}
                     >
-
+                        <Image
+                            source={require('../assets/images/family_m.png')}
+                            style={styles.gravatarImage}
+                            resizeMode={'center'}
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.gravatarSelect}
                         onPress={() => this.setState({gravatar:1})}
                     >
-
+                        <Image
+                            source={require('../assets/images/family_f.png')}
+                            style={styles.gravatarImage}
+                            resizeMode={'center'}
+                        />
                     </TouchableOpacity>
+                </View>
+                <View contentContainerStyle={styles.container} style={styles.container}>
+                    <AgButton title={"Add Player"} customClick={() => {
+                        console.log("adding player");
+                    }}/>
                 </View>
             </ScrollView>
         );
@@ -96,6 +113,14 @@ const styles = StyleSheet.create({
         padding: 3,
     },
     gravatarSelect: {
-        flex: 0.5,
+        marginTop: 15,
+        marginBottom: 15,
+        flex: 0.45,
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
+    gravatarImage: {
+        width: windowWidth * 0.45,
+        height: windowWidth * 0.45,
     }
 });
